@@ -91,10 +91,10 @@ def mars_weather():
     tweet_weather = []
     i = 0
 
-    while (len(tweet_weather)<1):
-        tweet_id = tweets[i].find('strong').text
+    while (len(tweet_weather)<1): 
         tweet_wx = tweets[i].find('p').text
-        if tweet_id == MarsWX:
+        weather = tweets[i].find('p').text.split()[0]
+        if weather == 'Sol':
             tweet_weather.append(tweet_wx)    
         i+=1
     mars_weather = tweet_weather[0]
@@ -111,14 +111,13 @@ def mars_weather():
 
 
 def mars_fact():
-    browser = init_browser()
     url_fact = 'https://space-facts.com/mars/'
     tables = pd.read_html(url_fact)
     tables[0]
-    tables[0]['index'] =  [tables[0][0][i].strip(":") for i in range(len(tables[0][0]))]
-    clean_table = tables[0][['index',1]]
-    clean_table = clean_table.set_index('index')
-    clean_table = clean_table.rename(columns={1:'value'})
+    tables[0]['FACT'] =  [tables[0][0][i].strip(":") for i in range(len(tables[0][0]))]
+    clean_table = tables[0][['FACT',1]]
+    clean_table = clean_table.set_index('FACT')
+    clean_table = clean_table.rename(columns={1:''})
     clean_table
     table_html = clean_table.to_html()
     
